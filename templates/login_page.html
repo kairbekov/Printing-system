@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html ng-app="loginApplication">
+	<head lang="en">
+        <meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+        <!--script src="{{ STATIC_URL }}js/login.js"></script-->
+        <!--link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css"-->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script>
+            angular.module('loginApplication',[])
+        .controller('LoginController', ['$scope', '$http', '$location',
+            function($scope, $http, $location){
+
+                $scope.text = "";
+                $scope.url = "http://127.0.0.1:8000/mainapp/login/";
+                $scope.params = {
+                    username : "",
+                    password : ""
+                };
+                $scope.data = "";
+                $scope.status = "";
+
+
+                $scope.loginBtn = function(){
+                    $http({method: 'GET', url: $scope.url, params: $scope.params}).
+                    success(function(data, status) {
+                      $scope.status = status;
+                      $scope.data = data;
+                      $location.path("");
+                    }).
+                    error(function(data, status) {
+                      $scope.data = data || "Request failed";
+                      $scope.status = status;
+                    });
+                };
+
+            }]);
+    </script>
+    <style>
+        .inputForm{
+            width: 25%;
+            height: 35%;
+            padding: 10px;
+            margin-top: 10%;
+            margin-left: 40%;
+            border-width: 3px;
+            border-style: solid;
+            border-color: #00CC66;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+    </style>
+		<title>Printing system</title>
+	</head>
+	<body>
+		<div class="inputForm" ng-controller="LoginController">
+			<h3>Printing System</h3>
+			<form>
+			  <div class="form-group">
+			    <input class="form-control" id="exampleInputEmail1" placeholder="Enter username" ng-model="params.username">
+			  </div>
+			  <div class="form-group">
+			    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="params.password">
+			  </div>
+			  <button type="submit" class="btn btn-primary" ng-click="loginBtn()">Log In</button>
+			</form>
+		</div>
+
+	</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html ng-app="logoutApplication">
+  <head lang="en">
+      <meta charset="UTF-8">
+    <!--link rel="stylesheet" type="text/css" href="../static/css/style.css"-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+     <script>
+            angular.module('logoutApplication',[])
+        .controller('LogoutController', ['$scope', '$http', '$location',
+            function($scope, $http, $location){
+
+                $scope.text = "";
+                $scope.url = "http://127.0.0.1:8000/mainapp/logout/";
+                $scope.data = "";
+                $scope.status = "";
+
+
+                $scope.logoutEvent = function(){
+                    $http({method: 'GET', url: $scope.url}).
+                    success(function(data, status) {
+                      $scope.status = status;
+                      $scope.data = data;
+                      //$location.path("/main");
+                    }).
+                    error(function(data, status) {
+                      $scope.data = data || "Request failed";
+                      $scope.status = status;
+                    });
+                };
+
+            }]);
+    </script>
+    <style>
+        .middle{
+            margin-top: -20px;
+            border-style: solid;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            height: 20%;
+            padding-top: 2%;
+            padding-left: 40%;
+        }
+
+        .documents{
+            margin-top: 5%;
+            margin-left: 25%;
+            width: 50%;
+            height: 60%;
+
+        }
+
+    </style>
+    <title>
+      Printing system | mainpage
+    </title>
+  </head>
+
+  <body>
+    <div ng-controller="LogoutController">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Home</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+              <li><a href="#">Link</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Balance: 100$</a></li>
+              <li><a href="#">Hello, Body</a></li>
+              <li><a href="#" ng-click="logoutEvent()">Log Out</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    </div>
+
+    <div class="middle">
+      <div class="form-group">
+        <label for="exampleInputFile">File input</label>
+        <input type="file" id="exampleInputFile">
+      </div>
+      <button type="button" class="btn btn-primary">Upload</button>
+    </div>
+
+    <div class="documents">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Diplom.doc</td>
+            <td>20.10.2011</td>
+            <td>2 MB</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>English report.docx</td>
+            <td>10.10.2010</td>
+            <td>5.1 MB</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Image.png</td>
+            <td>13.12.2011</td>
+            <td>7.4 MB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
